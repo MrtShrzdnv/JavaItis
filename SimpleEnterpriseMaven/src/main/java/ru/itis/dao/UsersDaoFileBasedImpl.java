@@ -6,18 +6,25 @@ import ru.itis.models.User;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class UsersDaoFileBasedImpl implements UsersDao {
 
     private BufferedReader fileReader;
     private String fileName;
 
-    public UsersDaoFileBasedImpl(String fileName) {
+    public UsersDaoFileBasedImpl() {
         try {
-            fileReader = new BufferedReader(new FileReader(fileName));
-            this.fileName = fileName;
+            Properties properties = new Properties();
+            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\SimpleEnterpriseMaven\\src\\main\\java\\ru\\itis\\resources\\fileNames"));
+            String file = properties.getProperty("fileName");
+            //String fileName = properties.getProperty("fileName");
+            fileReader = new BufferedReader(new FileReader(file));
+            this.fileName = file;
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

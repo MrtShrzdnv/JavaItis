@@ -12,8 +12,11 @@ public class SimpleUsersServiceImpl implements SimpleUsersService {
 
     private UsersDao usersDao;
 
-    public SimpleUsersServiceImpl(UsersDao usersDao) {
+    public void set(UsersDao user) {
         this.usersDao = usersDao;
+    }
+
+    public SimpleUsersServiceImpl() {
     }
 
     public boolean isRegistered(String userName, String userPassword) {
