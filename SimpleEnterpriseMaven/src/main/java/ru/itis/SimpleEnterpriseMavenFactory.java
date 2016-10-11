@@ -31,7 +31,7 @@ public class SimpleEnterpriseMavenFactory {
     private SimpleEnterpriseMavenFactory(){
         try {
             properties = new Properties();
-            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\SimpleEnterpriseMaven\\src\\main\\java\\ru\\itis\\resources\\SimpleInterprise"));
+            properties.load(new FileInputStream("C:\\Users\\Marat_2\\Desktop\\JavaItis\\SimpleEnterpriseMaven\\src\\main\\java\\ru\\itis\\resources\\SimpleEnterprise"));
             String dao = properties.getProperty("dao.class");
             String usersService = properties.getProperty("usersService.class");
             this.usersDao = (UsersDao)Class.forName(dao).newInstance();

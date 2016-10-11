@@ -16,11 +16,11 @@ public class UsersDaoFileBasedImpl implements UsersDao {
     public UsersDaoFileBasedImpl() {
         try {
             Properties properties = new Properties();
-            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\SimpleEnterpriseMaven\\src\\main\\java\\ru\\itis\\resources\\fileNames"));
+            properties.load(new FileInputStream("C:\\Users\\Marat_2\\Desktop\\JavaItis\\SimpleEnterpriseMaven\\src\\main\\java\\ru\\itis\\resources\\fileNames"));
             String file = properties.getProperty("fileName");
             //String fileName = properties.getProperty("fileName");
-            fileReader = new BufferedReader(new FileReader(file));
             this.fileName = file;
+            fileReader = new BufferedReader(new FileReader("C:\\Users\\Marat_2\\Desktop\\JavaItis\\SimpleEnterpriseMaven\\users.txt"));
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {

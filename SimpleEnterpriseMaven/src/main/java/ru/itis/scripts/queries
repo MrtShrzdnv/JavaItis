@@ -1,0 +1,5 @@
+ SELECT * FROM cars WHERE id_car = id_auto IN
+       (SELECT * FROM carstoowners WHERE id_owner = id_user IN
+          (SELECT * FROM users WHERE residence = 'Kazan')
+       )
+     ;

@@ -11,9 +11,9 @@ public class Main {
     public static void main(String[] args) {
         UsersDao usersDao = SimpleEnterpriseMavenFactory.getInstance().getUsersDao();
         SimpleUsersService service = SimpleEnterpriseMavenFactory.getInstance().getSimpleUsersService();
-        service.set(usersDao);
+        //service.set(usersDao);
         User user = new User("Marat", "qwerty", 22, 0004);
-        usersDao.save(user);
+        //usersDao.save(user);
         //System.out.println(service.isRegistered("Marsel", "qwerty008"));
     }
 }

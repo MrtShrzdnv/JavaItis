@@ -1,2 +1,0 @@
-dao.class = ru.itis.dao.UsersDaoFileBasedImpl
-userServices.class = ru.itis.service.SimpleUsersServiceImpl

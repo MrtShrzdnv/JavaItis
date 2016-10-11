@@ -1,0 +1,19 @@
+create table users(
+id_user int (10) AUTO_INCREMENT,
+name varchar(20) NOT NULL,
+age int (3) NOT NULL,
+residence varchar(20) NOT NULL,
+PRIMARY KEY (id_owner)
+);
+create table cars (
+id_car int (10) AUTO_INCREMENT,
+number varchar(10) NOT NULL,
+mileage int(10) NOT NULL,
+PRIMARY KEY (id_car)
+);
+create table carstoowners (
+id_auto int (10),
+id_owner int (10),
+FOREIGN KEY (id_auto) REFERENCES cars (id_car),
+FOREIGN KEY (id_owner) REFERENCES users (id_user)
+);
