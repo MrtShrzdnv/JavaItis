@@ -12,7 +12,7 @@ mileage int(10) NOT NULL,
 PRIMARY KEY (id_car)
 );
 create table carstoowners (
-id_auto int (10),
+id_car int (10),
 id_owner int (10),
 FOREIGN KEY (id_auto) REFERENCES cars (id_car),
 FOREIGN KEY (id_owner) REFERENCES users (id_user)
