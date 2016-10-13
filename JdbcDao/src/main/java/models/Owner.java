@@ -23,12 +23,17 @@ public class Owner {
         return residence;
     }
 
-    private int id;
+
 
     public int getId() {
         return id;
     }
+    @Override
+    public String toString() {
+        return id+" "+name+" "+age+" "+residence;
+    }
 
+    private int id;
     private String name;
     private  int age;
     private String residence;

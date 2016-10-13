@@ -1,7 +1,8 @@
 package factories;
 
 import java.io.FileInputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Properties;
 
 
@@ -18,13 +19,12 @@ public class JdbcConnection {
     private JdbcConnection(){
         properties = new Properties();
         try {
-            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\Connection.properties"));
+            properties.load(new FileInputStream("C:\\Users\\Marat_2\\Desktop\\JavaItis\\JdbcDao\\src\\Main\\resources\\Connection.properties"));
             Class.forName(properties.getProperty("jdbc.driver"));
             String url = properties.getProperty("jdbc.url");
             String username = properties.getProperty("jdbc.username");
             String password = properties.getProperty("jdbc.password");
             connection = DriverManager.getConnection(url, username, password);
-            Statement statement = connection.createStatement();
         } catch (Exception e) {
             System.out.println(e);
         }

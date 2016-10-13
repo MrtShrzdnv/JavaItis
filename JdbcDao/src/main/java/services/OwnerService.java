@@ -8,4 +8,5 @@ import models.Owner;
 public interface OwnerService {
     Owner findById(int id);
     void updateOwner(Owner owner);
+    void addOwner(Owner owner);
 }
