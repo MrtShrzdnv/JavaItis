@@ -1,4 +1,4 @@
-package Dao;
+package dao;
 
 import models.Car;
 
@@ -17,12 +17,8 @@ public class CarsDaoJdbcImpl implements CarsDao {
     private static final String UPDATE_QUERY = "UPDATE cars SET mileage = ? WHERE car_id = ?";
     private static final String ADD_QUERY = "INSERT INTO cars (car_id, mileage) VALUES (?, ?)";
 
-    public CarsDaoJdbcImpl() {
-        try {
-            connection = JdbcConnection.getInstance().getConnection();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    public CarsDaoJdbcImpl(Connection connection) {
+        this.connection = connection;
     }
 
     public Car find(int id) {

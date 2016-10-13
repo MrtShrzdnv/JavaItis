@@ -11,9 +11,10 @@ public class Car {
         return id;
     }
 
-    public int getMileage() {
+    public int getMileage(){
         return mileage;
     }
+
 
     public Car(int id, int mileage) {
         this.id = id;
