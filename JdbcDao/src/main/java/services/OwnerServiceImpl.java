@@ -15,6 +15,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     private OwnersDao ownersDao;
+
     public Owner findById(int id) {
         return this.ownersDao.find(id);
     }

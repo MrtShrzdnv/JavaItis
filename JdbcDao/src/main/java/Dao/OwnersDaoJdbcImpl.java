@@ -24,12 +24,9 @@ public class OwnersDaoJdbcImpl implements OwnersDao {
         try {
             ResultSet result = connection.createStatement().executeQuery(FIND_QUERY + id);
             Owner owner;
-            if (result.next()) {
+            result.next();
                 owner = new Owner(result.getInt("owner_id"), result.getString("name"), result.getInt("age"), result.getString("residence"));
                 return owner;
-            }
-            else
-                return null;
         } catch (SQLException e) {
             System.out.println(e);
         }

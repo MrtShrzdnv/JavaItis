@@ -20,7 +20,7 @@ public class ServiceFactory {
     private ServiceFactory() {
         this.properties = new Properties();
         try {
-            properties.load(new FileInputStream("C:\\Users\\Marat_2\\Desktop\\JavaItis\\JdbcDao\\src\\Main\\resources\\Service.properties"));
+            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\Service.properties"));
 
             String serviceClassName = properties.getProperty("service.class");
 
