@@ -1,6 +1,6 @@
-package dao;
+package ru.itis.dao;
 
-import models.Car;
+import ru.itis.models.Car;
 
 import java.util.List;
 

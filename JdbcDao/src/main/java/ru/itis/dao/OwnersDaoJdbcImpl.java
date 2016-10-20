@@ -1,6 +1,6 @@
-package dao;
+package ru.itis.dao;
 
-import models.Owner;
+import ru.itis.models.Owner;
 
 import java.sql.*;
 import java.util.ArrayList;

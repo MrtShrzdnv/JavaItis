@@ -1,4 +1,4 @@
-package factories;
+package ru.itis.factories;
 
 import java.io.FileInputStream;
 import java.sql.Connection;

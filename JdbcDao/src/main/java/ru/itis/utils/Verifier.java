@@ -1,6 +1,6 @@
-package utils;
+package ru.itis.utils;
 
-import factories.JdbcConnection;
+import ru.itis.factories.JdbcConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

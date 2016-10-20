@@ -1,9 +1,11 @@
-package services;
+package ru.itis.services;
 
-import dao.OwnersDao;
-import models.Owner;
+import ru.itis.dao.OwnersDao;
+import ru.itis.models.Owner;
 
-import static utils.Verifier.verifyUserExist;
+import java.util.List;
+
+import static ru.itis.utils.Verifier.verifyUserExist;
 
 
 /**
@@ -26,5 +28,9 @@ public class OwnerServiceImpl implements OwnerService {
     }
     public void addOwner(Owner owner){
         this.ownersDao.add(owner);
+    }
+
+    public List<Owner> getAll() {
+        return this.ownersDao.getAll();
     }
 }

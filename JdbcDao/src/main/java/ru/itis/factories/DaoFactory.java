@@ -1,7 +1,7 @@
-package factories;
+package ru.itis.factories;
 
-import dao.CarsDao;
-import dao.OwnersDao;
+import ru.itis.dao.CarsDao;
+import ru.itis.dao.OwnersDao;
 
 import java.io.FileInputStream;
 import java.lang.reflect.Constructor;
