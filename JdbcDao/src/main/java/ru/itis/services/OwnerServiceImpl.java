@@ -33,4 +33,7 @@ public class OwnerServiceImpl implements OwnerService {
     public List<Owner> getAll() {
         return this.ownersDao.getAll();
     }
+    public void delete(int id){
+        this.ownersDao.delete(id);
+    }
 }

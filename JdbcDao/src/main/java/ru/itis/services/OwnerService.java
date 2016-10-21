@@ -12,4 +12,5 @@ public interface OwnerService {
     void updateOwner(Owner owner);
     void addOwner(Owner owner);
     List<Owner> getAll();
+    void delete(int id);
 }

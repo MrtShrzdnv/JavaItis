@@ -10,6 +10,11 @@ public class Owner {
         this.age = age;
         this.residence = residence;
     }
+    public Owner( String name, int age, String residence) {
+        this.name = name;
+        this.age = age;
+        this.residence = residence;
+    }
 
     public String getName() {
         return name;

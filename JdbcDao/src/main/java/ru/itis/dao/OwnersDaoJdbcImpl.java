@@ -15,7 +15,7 @@ public class OwnersDaoJdbcImpl implements OwnersDao {
     private static final String GET_ALL_QUERY = "SELECT * FROM owners";
     private static final String DELETE_QUERY = "DELETE FROM owners WHERE owner_id = ?";
     private static final String UPDATE_QUERY = "UPDATE owners SET owner_id = ?, name = ?, age = ?, residence = ? WHERE car_id = ?";
-    private static final String ADD_QUERY = "INSERT INTO owners (owner_id, name, age, residence) VALUES (?, ?, ?, ?)";
+    private static final String ADD_QUERY = "INSERT INTO owners ( name, age, residence) VALUES (?, ?, ?)";
 
     public OwnersDaoJdbcImpl(Connection connection) {
         this.connection = connection;
@@ -75,10 +75,10 @@ public class OwnersDaoJdbcImpl implements OwnersDao {
     public void add(Owner owner) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(ADD_QUERY);
-            preparedStatement.setInt(1, owner.getId());
-            preparedStatement.setString(2, owner.getName());
-            preparedStatement.setInt(3, owner.getAge());
-            preparedStatement.setString(4, owner.getResidence());
+            //preparedStatement.setInt(1, owner.getId());
+            preparedStatement.setString(1, owner.getName());
+            preparedStatement.setInt(2, owner.getAge());
+            preparedStatement.setString(3, owner.getResidence());
             preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println(e);
