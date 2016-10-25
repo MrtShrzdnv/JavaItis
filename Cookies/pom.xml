@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.itis</groupId>
-    <artifactId>javaItis</artifactId>
+    <artifactId>cookies</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -25,6 +25,11 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0-rc1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -35,10 +40,8 @@
                 <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <packagingExcludes>WEB-INF/web.xml</packagingExcludes>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

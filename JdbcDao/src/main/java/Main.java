@@ -1,3 +1,4 @@
+import ru.itis.factories.JdbcConnection;
 import ru.itis.factories.ServiceFactory;
 import ru.itis.services.OwnerService;
 
@@ -6,5 +7,6 @@ import ru.itis.services.OwnerService;
  */
 public class Main {
     public static void main(String[] args) {
+        OwnerService ownerService = ServiceFactory.getInstance().getOwnerService();
     }
 }

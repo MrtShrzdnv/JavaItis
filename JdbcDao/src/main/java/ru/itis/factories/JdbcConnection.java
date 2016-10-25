@@ -19,7 +19,7 @@ public class JdbcConnection {
     private JdbcConnection(){
         properties = new Properties();
         try {
-            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\Connection.properties"));
+            properties.load(new FileInputStream("C:\\Users\\Marat_2\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\Connection.properties"));
             String driver = properties.getProperty("jdbc.driver");
             Class.forName(driver);
             String url = properties.getProperty("jdbc.url");

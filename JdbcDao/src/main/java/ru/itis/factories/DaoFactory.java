@@ -21,7 +21,7 @@ public class DaoFactory {
     private DaoFactory(){
         properties = new Properties();
         try{
-            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\Dao.properties"));
+            properties.load(new FileInputStream("C:\\Users\\Marat_2\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\Dao.properties"));
             String daoOwnerClassName = properties.getProperty("daoOwner.class");
             String daoCarClassName = properties.getProperty("daoCar.class");
             Class ownerClass = Class.forName(daoOwnerClassName);
