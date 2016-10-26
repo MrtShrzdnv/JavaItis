@@ -7,11 +7,11 @@ import java.util.List;
  */
 public class User {
     private int id;
-    private String name;
-    private String login;
-    private String password;
-    private String token;
-    private List<Car> cars;
+    private String name = null;
+    private String login = null;
+    private String password = null;
+    private String token = null;
+    private List<Car> cars = null;
 
     public User(int id, String name, String login, String password) {
         this.id = id;
@@ -73,8 +73,10 @@ public class User {
     public String toString(){
 
         String result =  "id = " + id + " login = " + login + " name = " + name + "\n";
-        for(Car car : cars) {
-            result += "   " + car.toString() + "\n";
+        if(cars != null) {
+            for (Car car : cars) {
+                result += "   " + car.toString() + "\n";
+            }
         }
         return result;
     }

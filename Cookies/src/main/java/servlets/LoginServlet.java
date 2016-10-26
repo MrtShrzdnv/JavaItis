@@ -31,6 +31,7 @@ public class LoginServlet extends HttpServlet {
                 User user = userService.findByLogin(login);
                 String token = new BigInteger(130, new SecureRandom()).toString(32);
                 Cookie cookie = new Cookie("token", token);
+
                 userService.setToken(user, token);
             } else {
                 doGet(request, response);

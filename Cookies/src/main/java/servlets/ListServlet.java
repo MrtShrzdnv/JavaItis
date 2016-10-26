@@ -29,10 +29,12 @@ public class ListServlet extends HttpServlet {
         try {
             response.setContentType("text/html; charset=UTF-8");
             List<User> users = userService.getAll();
-            for (User user : users) {
-                user.setCars(carService.getAllByOwnerId(user.getId()));
+            if(users != null) {
+                for (User user : users) {
+                    user.setCars(carService.getAllByOwnerId(user.getId()));
+                }
+                request.setAttribute("MyUsers", users);
             }
-            request.setAttribute("MyUsers", users);
             getServletContext().getRequestDispatcher("/list.jsp").forward(request, response);
         }catch (ServletException e) {
             throw new IllegalArgumentException(e);

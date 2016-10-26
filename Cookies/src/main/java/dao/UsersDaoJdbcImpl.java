@@ -19,7 +19,8 @@ public class UsersDaoJdbcImpl implements UsersDao {
     private static final String FIND_BY_TOKEN = "SELECT * FROM users WHERE token = ?";
     private static final String UPDATE_QUERY = "UPDATE users SET token = ? WHERE user_id = ?";
     Connection connection;
-    private static final String ADD_QUERY = "INSERT INTO users (name, login, password, token) VALUES (?, ?, ?, ?)";
+    //private static final String ADD_QUERY = "INSERT INTO users (name, login, password, token) VALUES (?, ?, ?, ?)";
+    private static final String ADD_QUERY = "INSERT INTO users (name, login, password) VALUES (?, ?, ?)";
     private static final String GET_ALL_QUERY = "SELECT * FROM users";
     private static final String IS_REGISTRED = "SELECT * FROM users WHERE login = ? and password = ?";
     public UsersDaoJdbcImpl(Connection connection) {
@@ -32,7 +33,7 @@ public class UsersDaoJdbcImpl implements UsersDao {
             ps.setString(1, user.getName());
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getPassword());
-            ps.setString(4, user.getToken());
+            //ps.setString(4, user.getToken());
             ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();

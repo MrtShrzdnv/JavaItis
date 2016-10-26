@@ -1,6 +1,6 @@
 package filters;
 
-import com.sun.deploy.net.HttpResponse;
+//import com.sun.deploy.net.HttpResponse;
 import factories.ServiceFactory;
 import services.UserService;
 
@@ -15,14 +15,18 @@ import java.io.IOException;
  */
 public class UserFilter implements javax.servlet.Filter {
     UserService userService;
+    boolean check;
+    FilterConfig filterConfig = null;
     public void init(FilterConfig filterConfig) throws ServletException {
         userService = ServiceFactory.getInstance().getUserService();
+        check = false;
+        this.filterConfig = filterConfig;
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String path = ((HttpServletRequest)servletRequest).getRequestURI();
+        String uri = ((HttpServletRequest)servletRequest).getRequestURI();
         Cookie[] cookies = ((HttpServletRequest)servletRequest).getCookies();
-        boolean check = false;
+
         if (cookies != null){
             for(Cookie cookie : cookies){
                 if (cookie.getName().equals("token")){
@@ -33,9 +37,10 @@ public class UserFilter implements javax.servlet.Filter {
                 }
             }
         }
-        if(!check && ((path.equals("/list")) ||(path.equals("addAuto")))){
+        if(!check && ((uri.equals("/list")) ||(uri.equals("/addAuto")))){
             ((HttpServletResponse)servletResponse).sendRedirect("/registration");
-        }
+        }else
+            filterChain.doFilter(servletRequest,servletResponse);
     }
 
     public void destroy() {

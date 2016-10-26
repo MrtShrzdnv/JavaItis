@@ -31,8 +31,6 @@ public class RegistrationServlet extends HttpServlet {
             String password = request.getParameter("password");
             if (!userService.isLoginExist(login)) {
                 User user = new User(name, login, password);
-                //String token = new BigInteger(130, new SecureRandom()).toString(32);
-                //Cookie cookie = new Cookie("token", token);
                 userService.add(user);
                 response.sendRedirect("/login");
             } else {

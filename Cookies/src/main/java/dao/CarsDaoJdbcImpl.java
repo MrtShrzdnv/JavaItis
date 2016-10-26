@@ -38,7 +38,7 @@ public class CarsDaoJdbcImpl implements CarsDao {
             Car car;
             List<Car> cars = new ArrayList<Car>();
             while (result.next()) {
-                car = new Car(result.getInt("user_id"), result.getString("number"), result.getInt("owner_id"));
+                car = new Car(result.getString("number"), result.getInt("owner_id"));
                 cars.add(car);
             }
             return cars;
