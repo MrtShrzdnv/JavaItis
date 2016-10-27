@@ -23,7 +23,7 @@ public class ServiceFactory {
     private ServiceFactory() {
         this.properties = new Properties();
         try {
-            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\Cookies\\src\\main\\resources\\Services.properties"));
+            properties.load(new FileInputStream("C:\\Users\\Marat_2\\Desktop\\JavaItis\\Cookies\\src\\main\\resources\\Services.properties"));
 
             String serviceUserClassName = properties.getProperty("serviceUser.class");
             String serviceCarClassName = properties.getProperty("serviceCar.class");

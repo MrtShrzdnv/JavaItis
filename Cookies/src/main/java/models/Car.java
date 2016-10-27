@@ -8,7 +8,13 @@ public class Car {
     private String number;
     private int ownerId;
 
-    public Car( String number, int ownerId) {
+    public Car(int id, String number, int ownerId) {
+        this.id = id;
+        this.number = number;
+        this.ownerId = ownerId;
+    }
+
+    public Car(String number, int ownerId) {
         this.number = number;
         this.ownerId = ownerId;
     }

@@ -15,4 +15,5 @@ public interface UsersDao {
     User findByToken(String token);
     boolean isRegistred(String login, String password);
     boolean isLoginExist(String login);
+    boolean isTokenExist(String token);
 }

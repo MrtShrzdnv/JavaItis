@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class CarsDaoJdbcImpl implements CarsDao {
     private Connection connection;
-    private static final String ADD_QUERY = "INSERT INTO cars (car_id, number, owner_id) VALUES (?, ?, ?)";
+    private static final String ADD_QUERY = "INSERT INTO cars (number, owner_id) VALUES (?, ?)";
     private static final String GET_ALL_QUERY_BY_OWNER_ID = "SELECT * FROM cars WHERE owner_id = ?";
     public CarsDaoJdbcImpl(Connection connection){
         this.connection = connection;
@@ -23,9 +23,8 @@ public class CarsDaoJdbcImpl implements CarsDao {
     public void add(Car car) {
         try {
             PreparedStatement ps = connection.prepareStatement(ADD_QUERY);
-            ps.setInt(1, car.getId());
-            ps.setString(2, car.getNumber());
-            ps.setInt(3, car.getOwnerId());
+            ps.setString(1, car.getNumber());
+            ps.setInt(2, car.getOwnerId());
             ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,11 +33,13 @@ public class CarsDaoJdbcImpl implements CarsDao {
 
     public List<Car> getAllByOwnerId(int id) {
         try {
-            ResultSet result = connection.createStatement().executeQuery(GET_ALL_QUERY_BY_OWNER_ID);
+            PreparedStatement ps = connection.prepareStatement(GET_ALL_QUERY_BY_OWNER_ID);
+            ps.setInt(1, id);
+            ResultSet result = ps.executeQuery();
             Car car;
             List<Car> cars = new ArrayList<Car>();
             while (result.next()) {
-                car = new Car(result.getString("number"), result.getInt("owner_id"));
+                car = new Car(result.getInt("car_id"), result.getString("number"), result.getInt("owner_id"));
                 cars.add(car);
             }
             return cars;

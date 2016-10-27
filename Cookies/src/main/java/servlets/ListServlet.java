@@ -1,6 +1,7 @@
 package servlets;
 
 import factories.ServiceFactory;
+import models.Car;
 import models.User;
 import services.CarService;
 import services.UserService;
@@ -30,9 +31,12 @@ public class ListServlet extends HttpServlet {
             response.setContentType("text/html; charset=UTF-8");
             List<User> users = userService.getAll();
             if(users != null) {
+
                 for (User user : users) {
-                    user.setCars(carService.getAllByOwnerId(user.getId()));
+                    List<Car> cars = carService.getAllByOwnerId(user.getId());
+                    user.setCars(cars);
                 }
+
                 request.setAttribute("MyUsers", users);
             }
             getServletContext().getRequestDispatcher("/list.jsp").forward(request, response);

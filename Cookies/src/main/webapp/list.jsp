@@ -5,7 +5,7 @@
     <title>List</title>
 </head>
 <body>
-<c:forEach items="${requestScope.myUsers}" var="currentUser">
+<c:forEach items="${requestScope.MyUsers}" var="currentUser">
     <h5>
         <tr>
             <td>

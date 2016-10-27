@@ -1,20 +1,20 @@
 <%--
   Created by IntelliJ IDEA.
   User: Marat_2
-  Date: 25.10.2016
-  Time: 17:23
+  Date: 27.10.2016
+  Time: 19:52
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>AddAuto</title>
+    <title>Logout</title>
 </head>
 <body>
-<form action="addAuto" method="post">
-    <p><b>Add auto</b></p>
-    <p><input type="text" name="number" value=""> Number<Br>
-    <p><input type="submit" value="Add"></p>
+<form action="logout" method="post">
+    <p>
+        <input type="submit" value="Logout">
+    </p>
 </form>
 </body>
 </html>

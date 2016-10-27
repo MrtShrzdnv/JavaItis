@@ -14,9 +14,9 @@ import java.io.IOException;
  * Created by Marat_2 on 25.10.2016.
  */
 public class UserFilter implements javax.servlet.Filter {
-    UserService userService;
-    boolean check;
-    FilterConfig filterConfig = null;
+    private UserService userService;
+    private boolean check;
+    private FilterConfig filterConfig = null;
     public void init(FilterConfig filterConfig) throws ServletException {
         userService = ServiceFactory.getInstance().getUserService();
         check = false;
@@ -26,18 +26,17 @@ public class UserFilter implements javax.servlet.Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String uri = ((HttpServletRequest)servletRequest).getRequestURI();
         Cookie[] cookies = ((HttpServletRequest)servletRequest).getCookies();
-
         if (cookies != null){
             for(Cookie cookie : cookies){
                 if (cookie.getName().equals("token")){
                     String token = cookie.getValue();
-                    if(userService.findByToken(token) != null)
+                    if(userService.isTokenExist(token))
                         check = true;
-                    return;
+                    break;
                 }
             }
         }
-        if(!check && ((uri.equals("/list")) ||(uri.equals("/addAuto")))){
+        if((!check) && ((uri.equals("/list")) ||(uri.equals("/addAuto")))){
             ((HttpServletResponse)servletResponse).sendRedirect("/registration");
         }else
             filterChain.doFilter(servletRequest,servletResponse);

@@ -15,8 +15,10 @@ import java.util.List;
  * Created by Marat_2 on 24.10.2016.
  */
 public class UsersDaoJdbcImpl implements UsersDao {
-    private static final String IS_LOGIN_EXIST_QUERY = "SELECT * FROM users WHERE login = ?";
+    private static final String IS_LOGIN_EXIST_QUERY = "SELECT login FROM users WHERE login = ?";
+    private static final String FIND_BY_LOGIN_QUERY = "SELECT * FROM users WHERE login = ?";
     private static final String FIND_BY_TOKEN = "SELECT * FROM users WHERE token = ?";
+    private static final String IS_TOKEN_EXIST_QUERY = "SELECT token FROM users WHERE token = ?";
     private static final String UPDATE_QUERY = "UPDATE users SET token = ? WHERE user_id = ?";
     Connection connection;
     //private static final String ADD_QUERY = "INSERT INTO users (name, login, password, token) VALUES (?, ?, ?, ?)";
@@ -58,8 +60,10 @@ public class UsersDaoJdbcImpl implements UsersDao {
             ResultSet result = connection.createStatement().executeQuery(GET_ALL_QUERY);
             User user;
             List<User> users = new ArrayList<User>();
+            //CarsDao car = new CarsDaoJdbcImpl(connection);
             while (result.next()) {
                 user = new User(result.getInt("user_id"), result.getString("name"), result.getString("login"), result.getString("password"), result.getString("token"));
+                //user.setCars(car.getAllByOwnerId(user.getId()));
                 users.add(user);
             }
             return users;
@@ -71,7 +75,7 @@ public class UsersDaoJdbcImpl implements UsersDao {
 
     public User findByLogin(String login) {
         try {
-            PreparedStatement statement = connection.prepareStatement(IS_LOGIN_EXIST_QUERY);
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_LOGIN_QUERY);
             statement.setString(1, login);
             ResultSet result = statement.executeQuery();
             result.next();
@@ -110,7 +114,21 @@ public class UsersDaoJdbcImpl implements UsersDao {
 
     public boolean isLoginExist(String login) {
         try {
-            ResultSet result = connection.createStatement().executeQuery(IS_LOGIN_EXIST_QUERY + login);
+            PreparedStatement statement = connection.prepareStatement(IS_LOGIN_EXIST_QUERY);
+            statement.setString(1, login);
+            ResultSet result = statement.executeQuery();
+            return result.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isTokenExist(String token) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(IS_TOKEN_EXIST_QUERY);
+            statement.setString(1, token);
+            ResultSet result = statement.executeQuery();
             return result.next();
         } catch (SQLException e) {
             e.printStackTrace();

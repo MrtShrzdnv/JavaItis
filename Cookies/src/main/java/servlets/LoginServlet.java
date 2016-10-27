@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.List;
 
 /**
  * Created by Marat_2 on 25.10.2016.
@@ -30,8 +31,20 @@ public class LoginServlet extends HttpServlet {
             if (userService.isRegistred(login, password)) {
                 User user = userService.findByLogin(login);
                 String token = new BigInteger(130, new SecureRandom()).toString(32);
-                Cookie cookie = new Cookie("token", token);
-
+                //Cookie cookie = new Cookie("token", token);
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for(Cookie cookie : cookies){
+                        if (cookie.getName().equals("token")){
+                            Cookie deleteCookie = new Cookie("token", null);
+                            deleteCookie.setMaxAge(0);
+                            deleteCookie.setPath("/");
+                            response.addCookie(deleteCookie);
+                            return;
+                        }
+                    }
+                }
+                response.addCookie(new Cookie("token", token));
                 userService.setToken(user, token);
             } else {
                 doGet(request, response);

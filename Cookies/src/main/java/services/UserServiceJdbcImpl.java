@@ -43,4 +43,8 @@ public class UserServiceJdbcImpl implements UserService {
     public boolean isLoginExist(String login) {
         return usersDao.isLoginExist(login);
     }
+
+    public boolean isTokenExist(String token) {
+        return usersDao.isTokenExist(token);
+    }
 }
