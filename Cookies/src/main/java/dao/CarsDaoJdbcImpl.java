@@ -3,6 +3,7 @@ package dao;
 import models.Car;
 import models.User;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +18,12 @@ public class CarsDaoJdbcImpl implements CarsDao {
     private Connection connection;
     private static final String ADD_QUERY = "INSERT INTO cars (number, owner_id) VALUES (?, ?)";
     private static final String GET_ALL_QUERY_BY_OWNER_ID = "SELECT * FROM cars WHERE owner_id = ?";
-    public CarsDaoJdbcImpl(Connection connection){
-        this.connection = connection;
+    public CarsDaoJdbcImpl(DataSource dataSource){
+        try {
+            this.connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     public void add(Car car) {
         try {

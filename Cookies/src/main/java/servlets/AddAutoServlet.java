@@ -3,6 +3,8 @@ package servlets;
 import factories.ServiceFactory;
 import models.Car;
 import models.User;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import services.CarService;
 import services.UserService;
 
@@ -22,8 +24,11 @@ public class AddAutoServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        carService = ServiceFactory.getInstance().getCarService();
-        userService = ServiceFactory.getInstance().getUserService();
+        //carService = ServiceFactory.getInstance().getCarService();
+        //userService = ServiceFactory.getInstance().getUserService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:context.xml");
+        carService = (CarService)context.getBean("carService");
+        userService = (UserService)context.getBean("userService");
 
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response){

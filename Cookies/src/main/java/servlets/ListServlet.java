@@ -3,6 +3,8 @@ package servlets;
 import factories.ServiceFactory;
 import models.Car;
 import models.User;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import services.CarService;
 import services.UserService;
 
@@ -22,8 +24,11 @@ public class ListServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        userService = ServiceFactory.getInstance().getUserService();
-        carService = ServiceFactory.getInstance().getCarService();
+        //userService = ServiceFactory.getInstance().getUserService();
+        //carService = ServiceFactory.getInstance().getCarService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:context.xml");
+        carService = (CarService)context.getBean("carService");
+        userService = (UserService)context.getBean("userService");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {

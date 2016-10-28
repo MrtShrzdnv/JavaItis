@@ -2,6 +2,9 @@ package filters;
 
 //import com.sun.deploy.net.HttpResponse;
 import factories.ServiceFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import services.CarService;
 import services.UserService;
 
 import javax.servlet.*;
@@ -18,7 +21,10 @@ public class UserFilter implements javax.servlet.Filter {
     private boolean check;
     private FilterConfig filterConfig = null;
     public void init(FilterConfig filterConfig) throws ServletException {
-        userService = ServiceFactory.getInstance().getUserService();
+        //userService = ServiceFactory.getInstance().getUserService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:context.xml");
+        //carService = (CarService)context.getBean("carService");
+        userService = (UserService)context.getBean("userService");
         check = false;
         this.filterConfig = filterConfig;
     }
@@ -36,7 +42,7 @@ public class UserFilter implements javax.servlet.Filter {
                 }
             }
         }
-        if((!check) && ((uri.equals("/list")) ||(uri.equals("/addAuto")))){
+        if(!check){ // && ((uri.equals("/list")) ||(uri.equals("/addAuto")))){
             ((HttpServletResponse)servletResponse).sendRedirect("/registration");
         }else
             filterChain.doFilter(servletRequest,servletResponse);

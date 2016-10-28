@@ -20,7 +20,7 @@ public class LogoutServlet extends HttpServlet {
                     deleteCookie.setMaxAge(0);
                     deleteCookie.setPath("/");
                     response.addCookie(deleteCookie);
-                    return;
+                    break;
                 }
             }
         }

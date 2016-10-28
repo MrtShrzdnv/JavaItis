@@ -57,7 +57,7 @@
 
     <filter-mapping>
         <filter-name>MyFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/list</url-pattern>
+        <url-pattern>/addAuto</url-pattern>
     </filter-mapping>
-
 </web-app>

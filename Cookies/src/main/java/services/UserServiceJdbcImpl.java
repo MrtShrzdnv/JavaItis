@@ -12,6 +12,7 @@ public class UserServiceJdbcImpl implements UserService {
     private UsersDao usersDao;
 
     public UserServiceJdbcImpl(UsersDao usersDao) {
+
         this.usersDao = usersDao;
     }
 

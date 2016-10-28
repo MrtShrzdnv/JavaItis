@@ -2,6 +2,9 @@ package servlets;
 
 import factories.ServiceFactory;
 import models.User;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import services.CarService;
 import services.UserService;
 
 import javax.servlet.ServletException;
@@ -22,7 +25,10 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        userService = ServiceFactory.getInstance().getUserService();
+        //userService = ServiceFactory.getInstance().getUserService();
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:context.xml");
+        //carService = (CarService)context.getBean("carService");
+        userService = (UserService)context.getBean("userService");
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response)  {
         try {

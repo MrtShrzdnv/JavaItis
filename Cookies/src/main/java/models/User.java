@@ -75,9 +75,10 @@ public class User {
         String result =  "id = " + id + " login = " + login + " name = " + name + "\n";
         if(cars != null) {
             for (Car car : cars) {
-                result += "   " + car.toString() + "\n";
+                result += "   " + car.toString() + " \n";
             }
         }
+        System.out.println(result);
         return result;
     }
 }
