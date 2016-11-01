@@ -70,15 +70,13 @@ public class User {
         this.cars = cars;
     }
 
+    public List<Car> getCars() {
+        return cars;
+    }
+
     public String toString(){
 
-        String result =  "id = " + id + " login = " + login + " name = " + name + "\n";
-        if(cars != null) {
-            for (Car car : cars) {
-                result += "   " + car.toString() + " \n";
-            }
-        }
-        System.out.println(result);
+        String result =  "id = " + id + " login = " + login + " name = " + name;
         return result;
     }
 }

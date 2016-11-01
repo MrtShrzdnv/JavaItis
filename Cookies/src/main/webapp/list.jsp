@@ -5,11 +5,11 @@
     <title>List</title>
 </head>
 <body>
-<c:forEach items="${requestScope.MyUsers}" var="currentUser">
+<c:forEach items="${requestScope.MyUser}" var="currentCar">
     <h5>
         <tr>
             <td>
-                 <c:out value="${currentUser}"/>
+                 <c:out value="${currentCar}"/>
             <td>
         </tr>
     </h5>

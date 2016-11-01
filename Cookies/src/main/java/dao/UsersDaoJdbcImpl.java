@@ -2,6 +2,7 @@ package dao;
 
 import models.Car;
 import models.User;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
 import java.security.acl.Owner;
@@ -26,6 +27,7 @@ public class UsersDaoJdbcImpl implements UsersDao {
     private static final String ADD_QUERY = "INSERT INTO users (name, login, password) VALUES (?, ?, ?)";
     private static final String GET_ALL_QUERY = "SELECT * FROM users";
     private static final String IS_REGISTRED = "SELECT * FROM users WHERE login = ? and password = ?";
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     public UsersDaoJdbcImpl(DataSource myDataSource) {
         try {
             this.connection = myDataSource.getConnection();

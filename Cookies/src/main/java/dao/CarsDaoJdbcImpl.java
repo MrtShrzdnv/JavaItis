@@ -2,6 +2,8 @@ package dao;
 
 import models.Car;
 import models.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -18,6 +20,9 @@ public class CarsDaoJdbcImpl implements CarsDao {
     private Connection connection;
     private static final String ADD_QUERY = "INSERT INTO cars (number, owner_id) VALUES (?, ?)";
     private static final String GET_ALL_QUERY_BY_OWNER_ID = "SELECT * FROM cars WHERE owner_id = ?";
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     public CarsDaoJdbcImpl(DataSource dataSource){
         try {
             this.connection = dataSource.getConnection();

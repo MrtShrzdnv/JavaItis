@@ -9,6 +9,7 @@ import services.CarService;
 import services.UserService;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,15 +35,17 @@ public class ListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             response.setContentType("text/html; charset=UTF-8");
-            List<User> users = userService.getAll();
-            if(users != null) {
-
-                for (User user : users) {
-                    List<Car> cars = carService.getAllByOwnerId(user.getId());
-                    user.setCars(cars);
+            Cookie[] cookies = request.getCookies();
+            if(cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("token")) {
+                        String token = cookie.getValue();
+                        User user = userService.findByToken(token);
+                        List<Car> cars = carService.getAllByOwnerId(user.getId());
+                        user.setCars(cars);
+                        request.setAttribute("MyUser", user.getCars());
+                    }
                 }
-
-                request.setAttribute("MyUsers", users);
             }
             getServletContext().getRequestDispatcher("/list.jsp").forward(request, response);
         }catch (ServletException e) {
