@@ -19,6 +19,8 @@ public class Car {
         this.ownerId = ownerId;
     }
 
+    public Car(){};
+
     public int getId() {
         return id;
     }
@@ -29,6 +31,18 @@ public class Car {
 
     public int getOwnerId() {
         return ownerId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String toString(){

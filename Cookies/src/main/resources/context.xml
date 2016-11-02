@@ -17,6 +17,10 @@
         <property name="password" value="postgresql"/>
     </bean>
 
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="myDataSource"></constructor-arg>
+    </bean>
+
     <tx:annotation-driven transaction-manager="txManager"/>
 
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -24,11 +28,11 @@
     </bean>
 
     <bean id="userDao" class="dao.UsersDaoJdbcImpl">
-        <constructor-arg ref="myDataSource"/>
+        <constructor-arg ref="namedParameterJdbcTemplate"/>
     </bean>
 
     <bean id="carDao" class="dao.CarsDaoJdbcImpl">
-        <constructor-arg ref="myDataSource"/>
+        <constructor-arg ref="namedParameterJdbcTemplate"/>
     </bean>
 
     <bean id="userService" class="services.UserServiceJdbcImpl">

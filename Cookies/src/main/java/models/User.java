@@ -41,6 +41,7 @@ public class User {
         this.login = login;
         this.password = password;
     }
+    public User(){};
 
     public int getId() {
         return id;
@@ -72,6 +73,22 @@ public class User {
 
     public List<Car> getCars() {
         return cars;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String toString(){

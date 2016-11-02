@@ -56,6 +56,15 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
+        <url-pattern>/owners</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>JsonServlet</servlet-name>
+        <servlet-class>servlets.JsonServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JsonServlet</servlet-name>
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
