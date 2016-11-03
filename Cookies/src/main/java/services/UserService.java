@@ -13,6 +13,7 @@ public interface UserService {
     List<User> getAll();
     User findByLogin(String login);
     User findByToken(String token);
+    User findById(int id);
     boolean isRegistred(String login, String password);
     boolean isLoginExist(String login);
     boolean isTokenExist(String token);

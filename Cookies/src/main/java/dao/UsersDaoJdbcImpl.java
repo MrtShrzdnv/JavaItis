@@ -22,6 +22,7 @@ import java.util.Map;
  */
 public class UsersDaoJdbcImpl implements UsersDao {
 
+    private static final String FIND_BY_ID = "SELECT * FROM users WHERE user_id = :user_id";
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private static final String IS_LOGIN_EXIST_QUERY = "SELECT * FROM users WHERE login = :login";
@@ -74,6 +75,13 @@ public class UsersDaoJdbcImpl implements UsersDao {
         Map namedParameters = new HashMap();
         namedParameters.put("token", token);
         User user = (User)namedParameterJdbcTemplate.queryForObject(FIND_BY_TOKEN, namedParameters, new UserMapper());
+        return user;
+    }
+
+    public User findById(int id) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("user_id", id);
+        User user = (User)namedParameterJdbcTemplate.queryForObject(FIND_BY_ID, namedParameters, new UserMapper());
         return user;
     }
 

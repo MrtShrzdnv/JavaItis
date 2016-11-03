@@ -37,6 +37,10 @@ public class UserServiceJdbcImpl implements UserService {
         return usersDao.findByToken(token);
     }
 
+    public User findById(int id) {
+        return usersDao.findById(id);
+    }
+
     public boolean isRegistred(String login, String password) {
         return usersDao.isRegistred(login, password);
     }
