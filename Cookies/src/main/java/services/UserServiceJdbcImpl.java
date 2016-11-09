@@ -2,12 +2,14 @@ package services;
 
 import dao.UsersDao;
 import models.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Marat_2 on 24.10.2016.
  */
+@Service
 public class UserServiceJdbcImpl implements UserService {
     private UsersDao usersDao;
 

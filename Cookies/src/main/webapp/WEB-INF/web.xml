@@ -59,12 +59,21 @@
         <!--<url-pattern>/owners</url-pattern>-->
     <!--</servlet-mapping>-->
 
+    <!--<servlet>-->
+        <!--<servlet-name>JsonServlet</servlet-name>-->
+        <!--<servlet-class>servlets.JsonServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>JsonServlet</servlet-name>-->
+        <!--<url-pattern>/</url-pattern>-->
+    <!--</servlet-mapping>-->
+
     <servlet>
-        <servlet-name>JsonServlet</servlet-name>
-        <servlet-class>servlets.JsonServlet</servlet-class>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>JsonServlet</servlet-name>
+        <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
