@@ -4,6 +4,7 @@ import models.Car;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 import utils.CarMapper;
 import utils.UserMapper;
 
@@ -20,14 +21,15 @@ import java.util.Map;
 /**
  * Created by Marat_2 on 24.10.2016.
  */
+@Repository
 public class CarsDaoJdbcImpl implements CarsDao {
     //private Connection connection;
     private static final String ADD_QUERY = "INSERT INTO cars (number, owner_id) VALUES (:number, :owner_id)";
     private static final String GET_ALL_QUERY_BY_OWNER_ID = "SELECT * FROM cars WHERE owner_id = :owner_id";
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    public CarsDaoJdbcImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    public CarsDaoJdbcImpl(DataSource dataSource){
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
     public void add(Car car) {
         Map namedParameters = new HashMap();

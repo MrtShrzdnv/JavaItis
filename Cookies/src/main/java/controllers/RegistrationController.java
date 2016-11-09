@@ -27,7 +27,7 @@ public class RegistrationController {
         return modelAndView;
     }
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView postRegistration(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView postRegistration(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
             String name = request.getParameter("name");
             String login = request.getParameter("login");

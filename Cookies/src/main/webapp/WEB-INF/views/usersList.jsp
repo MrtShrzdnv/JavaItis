@@ -12,7 +12,7 @@
     <title>Users</title>
 </head>
 <body>
-<c:forEach items="${requestScope.MyUsers}" var="currentUser">
+<c:forEach items="${MyUsers}" var="currentUser">
     <h5>
         <tr>
             <td>

@@ -12,31 +12,37 @@ import services.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * Created by Marat_2 on 09.11.2016.
  */
 @Controller
-public class ListController {
+public class AddAutoController {
     @Autowired
     UserService userService;
     @Autowired
     CarService carService;
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView getList(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
+    @RequestMapping(value = "/addAuto", method = RequestMethod.GET)
+    public ModelAndView getAddAuto(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("list");
+        modelAndView.setViewName("addAuto");
+        return modelAndView;
+    }
+    @RequestMapping(value = "/addAuto", method = RequestMethod.POST)
+    public ModelAndView postAddAuto(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("addAuto");
+        String number = request.getParameter("number");
+        Cookie[] cookies = request.getCookies();
         if(cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")) {
                     String token = cookie.getValue();
-                    User user = userService.findByToken(token);
-                    List<Car> cars = carService.getAllByOwnerId(user.getId());
-                    user.setCars(cars);
-                    modelAndView.addObject("MyUser", cars);
+                    if (!token.equals(null)) {
+                        User user = userService.findByToken(token);
+                        carService.add(new Car(number, user.getId()));
+                    }
+                    break;
                 }
             }
         }

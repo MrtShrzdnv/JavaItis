@@ -4,6 +4,7 @@ import models.Car;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 import utils.UserMapper;
 
 import javax.sql.DataSource;
@@ -20,6 +21,7 @@ import java.util.Map;
 /**
  * Created by Marat_2 on 24.10.2016.
  */
+@Repository
 public class UsersDaoJdbcImpl implements UsersDao {
 
     private static final String FIND_BY_ID = "SELECT * FROM users WHERE user_id = :user_id";
@@ -36,8 +38,8 @@ public class UsersDaoJdbcImpl implements UsersDao {
     private static final String GET_ALL_QUERY = "SELECT * FROM users";
     private static final String IS_REGISTRED = "SELECT * FROM users WHERE login = :login and password = :password";
 
-    public UsersDaoJdbcImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-            this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    public UsersDaoJdbcImpl(DataSource dataSource) {
+            this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     public void add(User user) {
