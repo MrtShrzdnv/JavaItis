@@ -2,6 +2,7 @@ package dao;
 
 import model.Chat;
 import model.ChatDto;
+import model.User;
 
 import java.util.List;
 
@@ -10,4 +11,7 @@ import java.util.List;
  */
 public interface ChatDao {
     List<Chat> findAll();
+    Chat findById(int id);
+    Chat findByName(String name);
+    void add(Chat chat);
 }

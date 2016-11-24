@@ -1,6 +1,11 @@
 package service;
 
+import dao.ChatDao;
+import dao.MessageDao;
+import dao.UserDao;
+import model.Message;
 import model.MessageDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,6 +16,15 @@ import java.util.List;
  */
 @Service
 public class MessageServiceImpl implements MessageService {
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private MessageDao messageDao;
+
+    @Autowired
+    private ChatDao chatDao;
+
     private List<MessageDto> newMessages;
 
     public MessageServiceImpl() {
@@ -20,11 +34,31 @@ public class MessageServiceImpl implements MessageService {
     public void hadleMessages(MessageDto newMessage){
         synchronized (newMessages){
             newMessages.add(newMessage);
-            notify();
+            notifyAll();
         }
     }
 
     public List<MessageDto> getNewMessages() {
         return newMessages;
+    }
+
+    @Override
+    public List<Message> findAll() {
+        return messageDao.findAll();
+    }
+
+    @Override
+    public List<Message> findAllByChatId(int id) {
+        return messageDao.findAllByChatId(id);
+    }
+
+    @Override
+    public List<Message> findAllByUserId(int id) {
+        return messageDao.findAllByUserId(id);
+    }
+
+    @Override
+    public void add(Message message) {
+        messageDao.add(message);
     }
 }

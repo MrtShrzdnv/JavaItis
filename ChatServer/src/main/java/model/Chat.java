@@ -8,7 +8,7 @@ import java.util.List;
 public class Chat {
     private int id;
     private String name;
-    private List<UserDto> usersList;
+    private List<User> usersList;
     private List<Message> messages;
 
     public Chat() {
@@ -30,11 +30,11 @@ public class Chat {
         this.name = name;
     }
 
-    public List<UserDto> getUsersList() {
+    public List<User> getUsersList() {
         return usersList;
     }
 
-    public void setUsersList(List<UserDto> usersList) {
+    public void setUsersList(List<User> usersList) {
         this.usersList = usersList;
     }
 

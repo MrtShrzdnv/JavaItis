@@ -3,6 +3,7 @@ package dao;
 import model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 import utils.MessageMapper;
 
 import javax.sql.DataSource;
@@ -13,13 +14,13 @@ import java.util.Map;
 /**
  * Created by KFU-user on 24.11.2016.
  */
+@Repository
 public class MessageDaoJdbcImpl implements MessageDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private final String FIND_ALL_QUERY = "SELECT * FROM messages";
-    private final String FIND_BY_CHAT_ID_QUERY = "SELECT * FROM messages WHERE chat_id = :chatId";
-    private final String FIND_BY_USER_ID_QUERY = "SELECT * FROM messages WHERE user_id = :userId";
-
-
+    private static final String FIND_ALL_QUERY = "SELECT * FROM messages";
+    private static final String FIND_BY_CHAT_ID_QUERY = "SELECT * FROM messages WHERE chat_id = :chatId";
+    private static final String FIND_BY_USER_ID_QUERY = "SELECT * FROM messages WHERE user_id = :userId";
+    private static final String ADD_QUERY = "INSERT INTO messages (text, chat_id, user_id) VALUES (:text, :chatId, :userId)";
 
     @Autowired
     public MessageDaoJdbcImpl(DataSource dataSource){
@@ -33,7 +34,7 @@ public class MessageDaoJdbcImpl implements MessageDao {
     }
 
     @Override
-    public List<Message> findByChatId(int id) {
+    public List<Message> findAllByChatId(int id) {
         Map namedParameters = new HashMap();
         namedParameters.put("userId", id);
         List<Message> messages = namedParameterJdbcTemplate.query(FIND_BY_USER_ID_QUERY, namedParameters, new MessageMapper());
@@ -41,9 +42,19 @@ public class MessageDaoJdbcImpl implements MessageDao {
     }
 
     @Override
-    public List<Message> findByUserId(int id) {
+    public List<Message> findAllByUserId(int id) {
         Map namedParameters = new HashMap();
         namedParameters.put("chatId", id);
         List<Message> messages = namedParameterJdbcTemplate.query(FIND_BY_CHAT_ID_QUERY, namedParameters, new MessageMapper());
-        return messages;    }
+        return messages;
+    }
+
+    @Override
+    public void add(Message message) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("text", message.getText());
+        namedParameters.put("chatId", message.getChatId());
+        namedParameters.put("userId", message.getUserId());
+        namedParameterJdbcTemplate.update(ADD_QUERY, namedParameters);
+    }
 }

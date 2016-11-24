@@ -8,7 +8,7 @@ import java.util.List;
 public class ChatDto {
     private int id;
     private String name;
-    private List<UserDto>  usersList;
+    private List<UserDto> usersList;
 
     public ChatDto(int id, String name, List<UserDto> usersList) {
         this.id = id;
