@@ -10,10 +10,10 @@ import java.util.List;
  * Created by Marat_2 on 23.11.2016.
  */
 @Service
-public class MessagesService {
+public class MessageServiceImpl implements MessageService {
     private List<MessageDto> newMessages;
 
-    public MessagesService() {
+    public MessageServiceImpl() {
         newMessages = new ArrayList<MessageDto>();
     }
 

@@ -5,11 +5,11 @@ package model;
  */
 public class MessageDto {
     private String text;
-    private String author;
+    private String userName;
 
-    public MessageDto(String text, String author) {
+    public MessageDto(String text, String userName) {
         this.text = text;
-        this.author = author;
+        this.userName = userName;
     }
 
     public MessageDto() {
@@ -23,11 +23,11 @@ public class MessageDto {
         this.text = text;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

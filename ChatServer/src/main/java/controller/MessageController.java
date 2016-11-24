@@ -5,9 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import service.MessagesService;
+import service.MessageServiceImpl;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +14,9 @@ import java.util.List;
  * Created by Marat_2 on 23.11.2016.
  */
 @RestController
-public class MessagesController {
+public class MessageController {
     @Autowired
-    MessagesService service;
+    MessageServiceImpl service;
     @RequestMapping(value = "/messages", method = RequestMethod.GET)
     public List<MessageDto> getMessages(){
         synchronized (service.getNewMessages()) {
