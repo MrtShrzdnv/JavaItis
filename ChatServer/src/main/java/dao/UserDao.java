@@ -13,6 +13,6 @@ public interface UserDao {
     List<User> findAllByChatId(int id);
     User findById(int id);
     User findByName(String name);
-    void add(User user);
-    void addUserToChat(User user, Chat chat);
+    void save(User user);
+    void saveUserToChat(User user, Chat chat);
 }

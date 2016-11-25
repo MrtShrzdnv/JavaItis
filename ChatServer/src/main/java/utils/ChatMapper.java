@@ -1,7 +1,6 @@
 package utils;
 
 import model.Chat;
-import model.ChatDto;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

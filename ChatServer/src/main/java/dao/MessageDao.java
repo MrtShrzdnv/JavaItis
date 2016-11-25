@@ -11,5 +11,5 @@ public interface MessageDao {
     List<Message> findAll();
     List<Message> findAllByChatId(int id);
     List<Message> findAllByUserId(int id);
-    void add(Message message);
+    void save(Message message);
 }

@@ -19,10 +19,10 @@ import java.util.Map;
  */
 @Repository
 public class ChatDaoJdbcImpl implements ChatDao {
-    private static final String FIND_BY_ID_QUERY = "SELECT * FROM chats WHERE id = :id";
-    private static final String FIND_BY_NAME_QUERY = "SELECT * FROM chats WHERE name = :name";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM chats";
-    private static final String ADD_QUERY = "INSERT INTO chats (name) VALUES (:name)";
+    private static final String FIND_BY_ID_QUERY = "SELECT * FROM chat WHERE id = :id";
+    private static final String FIND_BY_NAME_QUERY = "SELECT * FROM chat WHERE name = :name";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM chat";
+    private static final String ADD_QUERY = "INSERT INTO chat (name) VALUES (:name)";
 
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -54,7 +54,7 @@ public class ChatDaoJdbcImpl implements ChatDao {
     }
 
     @Override
-    public void add(Chat chat) {
+    public void save(Chat chat) {
         Map namedParameters = new HashMap();
         namedParameters.put("name", chat.getName());
         namedParameterJdbcTemplate.update(ADD_QUERY, namedParameters);

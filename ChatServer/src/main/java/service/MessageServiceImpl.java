@@ -4,7 +4,7 @@ import dao.ChatDao;
 import dao.MessageDao;
 import dao.UserDao;
 import model.Message;
-import model.MessageDto;
+import dto.MessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +59,6 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void add(Message message) {
-        messageDao.add(message);
+        messageDao.save(message);
     }
 }

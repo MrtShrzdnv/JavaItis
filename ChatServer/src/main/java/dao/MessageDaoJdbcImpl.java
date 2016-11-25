@@ -17,10 +17,10 @@ import java.util.Map;
 @Repository
 public class MessageDaoJdbcImpl implements MessageDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final String FIND_ALL_QUERY = "SELECT * FROM messages";
-    private static final String FIND_BY_CHAT_ID_QUERY = "SELECT * FROM messages WHERE chat_id = :chatId";
-    private static final String FIND_BY_USER_ID_QUERY = "SELECT * FROM messages WHERE user_id = :userId";
-    private static final String ADD_QUERY = "INSERT INTO messages (text, chat_id, user_id) VALUES (:text, :chatId, :userId)";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM message";
+    private static final String FIND_BY_CHAT_ID_QUERY = "SELECT * FROM message WHERE chat_id = :chatId";
+    private static final String FIND_BY_USER_ID_QUERY = "SELECT * FROM message WHERE user_id = :userId";
+    private static final String ADD_QUERY = "INSERT INTO message (text, chat_id, user_id) VALUES (:text, :chatId, :userId)";
 
     @Autowired
     public MessageDaoJdbcImpl(DataSource dataSource){
@@ -50,7 +50,7 @@ public class MessageDaoJdbcImpl implements MessageDao {
     }
 
     @Override
-    public void add(Message message) {
+    public void save(Message message) {
         Map namedParameters = new HashMap();
         namedParameters.put("text", message.getText());
         namedParameters.put("chatId", message.getChatId());

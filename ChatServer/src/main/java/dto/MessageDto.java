@@ -1,9 +1,10 @@
-package model;
+package dto;
 
 /**
  * Created by Marat_2 on 23.11.2016.
  */
 public class MessageDto {
+    private int id;
     private String text;
     private String userName;
 
@@ -29,5 +30,13 @@ public class MessageDto {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

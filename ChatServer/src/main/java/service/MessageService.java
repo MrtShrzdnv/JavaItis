@@ -1,7 +1,7 @@
 package service;
 
 import model.Message;
-import model.MessageDto;
+import dto.MessageDto;
 
 import java.util.List;
 
