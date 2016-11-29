@@ -52,7 +52,7 @@ public class ChatServiceImpl implements ChatService{
     }
 
     @Override
-    public void add(Chat chat) {
+    public void save(Chat chat) {
         chatDao.save(chat);
     }
 }

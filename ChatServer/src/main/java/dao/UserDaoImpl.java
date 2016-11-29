@@ -5,8 +5,8 @@ import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import utils.UserIdMapper;
-import utils.UserMapper;
+import utils.mapper.UserIdMapper;
+import utils.mapper.UserMapper;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -18,11 +18,15 @@ import java.util.Map;
  */
 @Repository
 public class UserDaoImpl implements UserDao {
+    private static final String IS_REGISTRED_QUERY = "SELECT * FROM chat_user WHERE login = :login and hash_password = :hash_password";
+    private static final String IS_LOGIN_EXIST_QUERY = "SELECT * FROM chat_user WHERE login = :login";
+    private static final String FIND_USER_ID_BY_TOKEN_QUERY = "SELECT * FROM auth WHERE token = :token";
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final String FIND_ALL_QUERY = "SELECT * FROM chat_user";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM chat_user WHERE id = :id";
     private static final String FIND_BY_NAME_QUERY = "SELECT * FROM chat_user WHERE name = :name";
-    private static final String ADD_QUERY = "INSERT INTO chat_user (name) VALUES (:name)";
+    private static final String ADD_QUERY = "INSERT INTO chat_user (name, login, hash_password) VALUES (:name, :login, :hash_password)";
+    private static final String UPDATE_QUERY = "UPDATE chat_user SET name = :name, login = :login, hash_password = :hash_password WHERE id = :userId";
     private static final String ADD_USER_TO_CHAT_QUERY = "INSERT INTO user_feat_chat (chat_id, user_id) VALUES ( :chatId, :userId)";
     private static final String FIND_ALL_BY_CHAT_ID_QUERY = "SELECT user_id FROM user_feat_chat WHERE chat_id = :chatId";
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM chat_user WHERE id = :userId";
@@ -68,7 +72,19 @@ public class UserDaoImpl implements UserDao {
     public void save(User user) {
         Map namedParameters = new HashMap();
         namedParameters.put("name", user.getName());
+        namedParameters.put("login", user.getLogin());
+        namedParameters.put("hash_password", user.getHashPassword());
         namedParameterJdbcTemplate.update(ADD_QUERY, namedParameters);
+    }
+
+    @Override
+    public void update(User user) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("userId", user.getId());
+        namedParameters.put("name", user.getName());
+        namedParameters.put("login", user.getLogin());
+        namedParameters.put("hash_password", user.getHashPassword());
+        namedParameterJdbcTemplate.update(UPDATE_QUERY, namedParameters);
     }
 
     @Override
@@ -100,5 +116,36 @@ public class UserDaoImpl implements UserDao {
         namedParameters.put("userId", user.getId());
         namedParameters.put("chatId", chat.getId());
         namedParameterJdbcTemplate.update(ADD_USER_TO_CHAT_QUERY, namedParameters);
+    }
+
+    @Override
+    public boolean isRegistred(String login, String hash_password) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("login", login);
+        namedParameters.put("password", hash_password);
+        List<User> users = namedParameterJdbcTemplate.query(IS_REGISTRED_QUERY, namedParameters, new UserMapper());
+        if (users.isEmpty())
+            return false;
+        else
+            return true;
+    }
+
+    @Override
+    public boolean isLoginExist(String login) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("login", login);
+        List<User> users = namedParameterJdbcTemplate.query(IS_LOGIN_EXIST_QUERY, namedParameters, new UserMapper());
+        if (users.isEmpty())
+            return false;
+        else
+            return true;
+    }
+
+    @Override
+    public Integer findUserIdByToken(String token) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("token", token);
+        Integer id = (Integer)namedParameterJdbcTemplate.queryForObject(FIND_USER_ID_BY_TOKEN_QUERY, namedParameters, new UserIdMapper());
+        return id;
     }
 }

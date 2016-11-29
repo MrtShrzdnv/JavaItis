@@ -41,6 +41,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByToken(String token) {
+        Integer userId = userDao.findUserIdByToken(token);
+        return userDao.findById(userId);
+    }
+
+    @Override
     public List<User> findAllByChatId(Integer id) {
         List<Integer> usersId = userDao.findAllByChatId(id);
         List<User> users = null;
@@ -54,6 +60,11 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
         userDao.save(user);
         userDao.saveToken(user.getId(), "");
+    }
+
+    @Override
+    public void update(User user) {
+        userDao.update(user);
     }
 
     @Override

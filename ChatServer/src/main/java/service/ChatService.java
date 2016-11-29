@@ -11,5 +11,5 @@ public interface ChatService {
     Chat findById(Integer id);
     Chat findByName(String name);
     List<Chat> findAll();
-    void add(Chat chat);
+    void save(Chat chat);
 }

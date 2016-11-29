@@ -6,9 +6,9 @@ import java.util.List;
  * Created by KFU-user on 24.11.2016.
  */
 public class Chat {
-    private int id;
+    private Integer id;
     private String name;
-    private int owner_id;
+    private Integer ownerId;
     private List<User> usersList;
     private List<Message> messages;
 
@@ -48,10 +48,43 @@ public class Chat {
     }
 
     public int getOwnerId() {
-        return owner_id;
+        return ownerId;
     }
 
     public void setOwnerId(int owner_id) {
-        this.owner_id = owner_id;
+        this.ownerId = owner_id;
     }
+
+    public static Builder newBuilder() {
+        return new Chat().new Builder();
+    }
+
+    public class Builder{
+
+         private Builder(){}
+
+         public Builder setId(Integer id){
+             Chat.this.id = id;
+             return this;
+         }
+         public Builder setName(String name){
+             Chat.this.name = name;
+             return this;
+         }
+         public Builder setOwnerId(Integer owner_id){
+             Chat.this.ownerId = owner_id;
+             return this;
+         }
+         public Builder setUsersList(List<User> usersList){
+             Chat.this.usersList = usersList;
+             return this;
+         }
+         public Builder setMessages(List<Message> messages){
+             Chat.this.messages = messages;
+             return this;
+         }
+         public Chat build(){
+             return Chat.this;
+         }
+     }
 }

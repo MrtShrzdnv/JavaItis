@@ -4,7 +4,8 @@ import model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import utils.MessageMapper;
+import utils.mapper.LastMessageMapper;
+import utils.mapper.MessageMapper;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -16,6 +17,8 @@ import java.util.Map;
  */
 @Repository
 public class MessageDaoJdbcImpl implements MessageDao {
+    private static final String FIND_LAST_MESSAGE_QUERY = "SELECT * FROM user_message WHERE user_id = :userId and chat_id = :chatId";
+    private static final String UPDATE_LAST_MESSAGE_QUERY = "UPDATE user_message SET last_message_id = :lastMessageId WHERE user_id = :userId, chat_id = :chatId";
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final String FIND_ALL_QUERY = "SELECT * FROM message";
     private static final String FIND_BY_CHAT_ID_QUERY = "SELECT * FROM message WHERE chat_id = :chatId";
@@ -48,6 +51,24 @@ public class MessageDaoJdbcImpl implements MessageDao {
         namedParameters.put("chatId", id);
         List<Message> messages = namedParameterJdbcTemplate.query(FIND_BY_CHAT_ID_QUERY, namedParameters, new MessageMapper());
         return messages;
+    }
+
+    @Override
+    public Integer findLastMessage(Integer userId, Integer chatId) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("userId", userId);
+        namedParameters.put("chatId", chatId);
+        Integer lastMessageId = (Integer)namedParameterJdbcTemplate.queryForObject(FIND_LAST_MESSAGE_QUERY, namedParameters, new LastMessageMapper());
+        return lastMessageId;
+    }
+
+    @Override
+    public void saveLastMessage(Integer userId, Integer chatId, Integer lastMessageId) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("userId", userId);
+        namedParameters.put("chatId", chatId);
+        namedParameters.put("lastMessageId", lastMessageId);
+        namedParameterJdbcTemplate.update(UPDATE_LAST_MESSAGE_QUERY, namedParameters);
     }
 
     @Override

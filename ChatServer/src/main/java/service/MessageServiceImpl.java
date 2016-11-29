@@ -58,7 +58,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void add(Message message) {
+    public void save(Message message) {
         messageDao.save(message);
     }
 }

@@ -4,7 +4,7 @@ import model.Chat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import utils.ChatMapper;
+import utils.mapper.ChatMapper;
 
 import javax.sql.DataSource;
 
@@ -21,7 +21,7 @@ public class ChatDaoJdbcImpl implements ChatDao {
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM chat WHERE id = :id";
     private static final String FIND_BY_NAME_QUERY = "SELECT * FROM chat WHERE name = :name";
     private static final String FIND_ALL_QUERY = "SELECT * FROM chat";
-    private static final String ADD_QUERY = "INSERT INTO chat (name) VALUES (:name)";
+    private static final String ADD_QUERY = "INSERT INTO chat (name, owner_id) VALUES (:name, :ownerId)";
 
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -56,6 +56,7 @@ public class ChatDaoJdbcImpl implements ChatDao {
     public void save(Chat chat) {
         Map namedParameters = new HashMap();
         namedParameters.put("name", chat.getName());
+        namedParameters.put("ownerId", chat.getOwnerId());
         namedParameterJdbcTemplate.update(ADD_QUERY, namedParameters);
     }
 

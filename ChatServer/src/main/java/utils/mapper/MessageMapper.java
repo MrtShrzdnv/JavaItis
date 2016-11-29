@@ -1,4 +1,4 @@
-package utils;
+package utils.mapper;
 
 import model.Message;
 import org.springframework.jdbc.core.RowMapper;

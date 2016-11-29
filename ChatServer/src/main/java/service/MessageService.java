@@ -14,5 +14,5 @@ public interface MessageService {
     List<Message> findAll();
     List<Message> findAllByChatId(Integer id);
     List<Message> findAllByUserId(Integer id);
-    void add(Message message);
+    void save(Message message);
 }
