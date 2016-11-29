@@ -2,7 +2,6 @@ package service;
 
 import dao.ChatDao;
 import dao.MessageDao;
-import dao.UserDao;
 import model.Chat;
 import model.Message;
 import model.User;
@@ -18,7 +17,7 @@ import java.util.List;
 public class ChatServiceImpl implements ChatService{
 
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
 
     @Autowired
     private MessageDao messageDao;
@@ -27,10 +26,10 @@ public class ChatServiceImpl implements ChatService{
     private ChatDao chatDao;
 
     @Override
-    public Chat findById(int id) {
+    public Chat findById(Integer id) {
         Chat chat = chatDao.findById(id);
         List<Message> messagesOfChat = messageDao.findAllByChatId(id);
-        List<User> usersOfChat = userDao.findAllByChatId(id);
+        List<User> usersOfChat = userService.findAllByChatId(id);
         chat.setMessages(messagesOfChat);
         chat.setUsersList(usersOfChat);
         return chat;

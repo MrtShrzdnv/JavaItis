@@ -21,6 +21,7 @@ public class MessageDaoJdbcImpl implements MessageDao {
     private static final String FIND_BY_CHAT_ID_QUERY = "SELECT * FROM message WHERE chat_id = :chatId";
     private static final String FIND_BY_USER_ID_QUERY = "SELECT * FROM message WHERE user_id = :userId";
     private static final String ADD_QUERY = "INSERT INTO message (text, chat_id, user_id) VALUES (:text, :chatId, :userId)";
+    private static final String DELETE_BY_ID_QUERY = "DELETE FROM message WHERE id = :messageId";
 
     @Autowired
     public MessageDaoJdbcImpl(DataSource dataSource){
@@ -34,7 +35,7 @@ public class MessageDaoJdbcImpl implements MessageDao {
     }
 
     @Override
-    public List<Message> findAllByChatId(int id) {
+    public List<Message> findAllByChatId(Integer id) {
         Map namedParameters = new HashMap();
         namedParameters.put("userId", id);
         List<Message> messages = namedParameterJdbcTemplate.query(FIND_BY_USER_ID_QUERY, namedParameters, new MessageMapper());
@@ -42,7 +43,7 @@ public class MessageDaoJdbcImpl implements MessageDao {
     }
 
     @Override
-    public List<Message> findAllByUserId(int id) {
+    public List<Message> findAllByUserId(Integer id) {
         Map namedParameters = new HashMap();
         namedParameters.put("chatId", id);
         List<Message> messages = namedParameterJdbcTemplate.query(FIND_BY_CHAT_ID_QUERY, namedParameters, new MessageMapper());
@@ -56,5 +57,12 @@ public class MessageDaoJdbcImpl implements MessageDao {
         namedParameters.put("chatId", message.getChatId());
         namedParameters.put("userId", message.getUserId());
         namedParameterJdbcTemplate.update(ADD_QUERY, namedParameters);
+    }
+
+    @Override
+    public void delete(int id) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("messageId", id);
+        namedParameterJdbcTemplate.update(DELETE_BY_ID_QUERY, namedParameters);
     }
 }

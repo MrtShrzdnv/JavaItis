@@ -9,7 +9,8 @@ import java.util.List;
  */
 public interface MessageDao {
     List<Message> findAll();
-    List<Message> findAllByChatId(int id);
-    List<Message> findAllByUserId(int id);
+    List<Message> findAllByChatId(Integer id);
+    List<Message> findAllByUserId(Integer id);
     void save(Message message);
+    void delete(int id);
 }

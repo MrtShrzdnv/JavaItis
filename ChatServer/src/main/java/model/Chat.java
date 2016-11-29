@@ -8,6 +8,7 @@ import java.util.List;
 public class Chat {
     private int id;
     private String name;
+    private int owner_id;
     private List<User> usersList;
     private List<Message> messages;
 
@@ -44,5 +45,13 @@ public class Chat {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public int getOwnerId() {
+        return owner_id;
+    }
+
+    public void setOwnerId(int owner_id) {
+        this.owner_id = owner_id;
     }
 }

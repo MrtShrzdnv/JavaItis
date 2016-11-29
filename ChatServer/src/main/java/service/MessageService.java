@@ -12,7 +12,7 @@ public interface MessageService {
     void hadleMessages(MessageDto messageDto);
     List<MessageDto> getNewMessages();
     List<Message> findAll();
-    List<Message> findAllByChatId(int id);
-    List<Message> findAllByUserId(int id);
+    List<Message> findAllByChatId(Integer id);
+    List<Message> findAllByUserId(Integer id);
     void add(Message message);
 }

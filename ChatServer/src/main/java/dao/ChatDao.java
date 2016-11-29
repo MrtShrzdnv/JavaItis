@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface ChatDao {
     List<Chat> findAll();
-    Chat findById(int id);
+    Chat findById(Integer id);
     Chat findByName(String name);
     void save(Chat chat);
 }

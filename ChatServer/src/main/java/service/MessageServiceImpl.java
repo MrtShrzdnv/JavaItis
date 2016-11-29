@@ -48,12 +48,12 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> findAllByChatId(int id) {
+    public List<Message> findAllByChatId(Integer id) {
         return messageDao.findAllByChatId(id);
     }
 
     @Override
-    public List<Message> findAllByUserId(int id) {
+    public List<Message> findAllByUserId(Integer id) {
         return messageDao.findAllByUserId(id);
     }
 

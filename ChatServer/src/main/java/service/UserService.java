@@ -8,8 +8,10 @@ import java.util.List;
  * Created by Marat_2 on 24.11.2016.
  */
 public interface UserService {
-    User findById(int id);
+    User findById(Integer id);
     User findByName(String name);
     List<User> findAll();
-    void add(User user);
+    List<User> findAllByChatId(Integer id);
+    void save(User user);
+    void updateToken(Integer userId, String token);
 }

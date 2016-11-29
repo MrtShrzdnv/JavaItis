@@ -10,9 +10,12 @@ import java.util.List;
  */
 public interface UserDao {
     List<User> findAll();
-    List<User> findAllByChatId(int id);
-    User findById(int id);
+    List<Integer> findAllByChatId(Integer id);
+    User findById(Integer id);
     User findByName(String name);
     void save(User user);
+    void saveToken(Integer userId, String token);
+    void updateToken(Integer userId, String token);
+    void delete(int id);
     void saveUserToChat(User user, Chat chat);
 }

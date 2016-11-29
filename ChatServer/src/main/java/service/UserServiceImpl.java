@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ChatDao chatDao;
     @Override
-    public User findById(int id) {
+    public User findById(Integer id) {
         User user = userDao.findById(id);
         return user;
     }
@@ -41,7 +41,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void add(User user) {
+    public List<User> findAllByChatId(Integer id) {
+        List<Integer> usersId = userDao.findAllByChatId(id);
+        List<User> users = null;
+        for(Integer userId : usersId){
+            users.add(findById(userId));
+        }
+        return users;
+    }
+
+    @Override
+    public void save(User user) {
         userDao.save(user);
+        userDao.saveToken(user.getId(), "");
+    }
+
+    @Override
+    public void updateToken(Integer userId, String token) {
+        userDao.updateToken(userId, token);
     }
 }

@@ -1,7 +1,6 @@
 package dao;
 
 import model.Chat;
-import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -38,7 +37,7 @@ public class ChatDaoJdbcImpl implements ChatDao {
     }
 
     @Override
-    public Chat findById(int id) {
+    public Chat findById(Integer id) {
         Map namedParameters = new HashMap();
         namedParameters.put("id", id);
         Chat chats = (Chat)namedParameterJdbcTemplate.queryForObject(FIND_BY_ID_QUERY, namedParameters, new ChatMapper());

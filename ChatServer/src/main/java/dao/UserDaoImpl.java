@@ -22,9 +22,14 @@ public class UserDaoImpl implements UserDao {
     private static final String FIND_ALL_QUERY = "SELECT * FROM chat_user";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM chat_user WHERE id = :id";
     private static final String FIND_BY_NAME_QUERY = "SELECT * FROM chat_user WHERE name = :name";
-    private static final String ADD_QUERY = "INSERT INTO users (name) VALUES (:name)";
+    private static final String ADD_QUERY = "INSERT INTO chat_user (name) VALUES (:name)";
     private static final String ADD_USER_TO_CHAT_QUERY = "INSERT INTO user_feat_chat (chat_id, user_id) VALUES ( :chatId, :userId)";
     private static final String FIND_ALL_BY_CHAT_ID_QUERY = "SELECT user_id FROM user_feat_chat WHERE chat_id = :chatId";
+    private static final String DELETE_BY_ID_QUERY = "DELETE FROM chat_user WHERE id = :userId";
+    private static final String SAVE_TOKEN_QUERY = "INSERT INTO auth (user_id, token) VALUES (:userId, token)";
+    private static final String UPDATE_TOKEN_QUERY = "UPDATE auth SET token = :token WHERE user_id = :userId";
+
+
     @Autowired
     public UserDaoImpl(DataSource dataSource){
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
@@ -36,19 +41,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> findAllByChatId(int id) {
+    public List<Integer> findAllByChatId(Integer id) {
         Map namedParameters = new HashMap();
         namedParameters.put("chatId", id);
         List<Integer> usersId = namedParameterJdbcTemplate.query(FIND_ALL_BY_CHAT_ID_QUERY, namedParameters, new UserIdMapper());
-        List<User> users = null;
-        for(Integer userId : usersId){
-            users.add(findById(userId));
-        }
-        return users;
+        return usersId;
     }
 
     @Override
-    public User findById(int id) {
+    public User findById(Integer id) {
         Map namedParameters = new HashMap();
         namedParameters.put("id", id);
         User users = (User)namedParameterJdbcTemplate.queryForObject(FIND_BY_ID_QUERY, namedParameters, new UserMapper());
@@ -68,6 +69,29 @@ public class UserDaoImpl implements UserDao {
         Map namedParameters = new HashMap();
         namedParameters.put("name", user.getName());
         namedParameterJdbcTemplate.update(ADD_QUERY, namedParameters);
+    }
+
+    @Override
+    public void saveToken(Integer userId, String token) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("userId", userId);
+        namedParameters.put("token", token);
+        namedParameterJdbcTemplate.update(SAVE_TOKEN_QUERY, namedParameters);
+    }
+
+    @Override
+    public void updateToken(Integer userId, String token) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("userId", userId);
+        namedParameters.put("token", token);
+        namedParameterJdbcTemplate.update(UPDATE_TOKEN_QUERY, namedParameters);
+    }
+
+    @Override
+    public void delete(int id) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("userId", id);
+        namedParameterJdbcTemplate.update(DELETE_BY_ID_QUERY, namedParameters);
     }
 
     @Override
