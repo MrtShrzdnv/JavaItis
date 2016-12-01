@@ -15,11 +15,11 @@ public class Chat {
     public Chat() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -29,6 +29,14 @@ public class Chat {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
     }
 
     public List<User> getUsersList() {
@@ -45,14 +53,6 @@ public class Chat {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
-    }
-
-    public int getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(int owner_id) {
-        this.ownerId = owner_id;
     }
 
     public static Builder newBuilder() {

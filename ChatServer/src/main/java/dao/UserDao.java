@@ -13,13 +13,15 @@ public interface UserDao {
     List<Integer> findAllByChatId(Integer id);
     User findById(Integer id);
     User findByName(String name);
+    User findByLoginAndPassword(String login, String hash_password);
     void save(User user);
     void update(User user);
     void saveToken(Integer userId, String token);
     void updateToken(Integer userId, String token);
     void delete(int id);
-    void saveUserToChat(User user, Chat chat);
+    void saveUserToChat(Integer userId, Integer chatId);
     boolean isRegistred(String login, String hash_password);
     boolean isLoginExist(String login);
+    boolean isTokenExist(String token);
     Integer findUserIdByToken(String token);
 }

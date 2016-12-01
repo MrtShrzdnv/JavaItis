@@ -1,10 +1,10 @@
 package dao;
 
-import model.Chat;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import utils.mapper.TokenMapper;
 import utils.mapper.UserIdMapper;
 import utils.mapper.UserMapper;
 
@@ -21,6 +21,7 @@ public class UserDaoImpl implements UserDao {
     private static final String IS_REGISTRED_QUERY = "SELECT * FROM chat_user WHERE login = :login and hash_password = :hash_password";
     private static final String IS_LOGIN_EXIST_QUERY = "SELECT * FROM chat_user WHERE login = :login";
     private static final String FIND_USER_ID_BY_TOKEN_QUERY = "SELECT * FROM auth WHERE token = :token";
+    private static final String FIND_BY_LOGIN_AND_PASSWORD_QUERY = "SELECT * FROM chat_user WHERE login = :login and hash_password = :hash_password";;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final String FIND_ALL_QUERY = "SELECT * FROM chat_user";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM chat_user WHERE id = :id";
@@ -69,6 +70,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User findByLoginAndPassword(String login, String hash_password) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("login", login);
+        namedParameters.put("password", hash_password);
+        User users = (User)namedParameterJdbcTemplate.queryForObject(FIND_BY_LOGIN_AND_PASSWORD_QUERY, namedParameters, new UserMapper());
+        return users;
+    }
+
+    @Override
     public void save(User user) {
         Map namedParameters = new HashMap();
         namedParameters.put("name", user.getName());
@@ -111,10 +121,10 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void saveUserToChat(User user, Chat chat) {
+    public void saveUserToChat(Integer userId, Integer chatId) {
         Map namedParameters = new HashMap();
-        namedParameters.put("userId", user.getId());
-        namedParameters.put("chatId", chat.getId());
+        namedParameters.put("userId", userId);
+        namedParameters.put("chatId", chatId);
         namedParameterJdbcTemplate.update(ADD_USER_TO_CHAT_QUERY, namedParameters);
     }
 
@@ -122,7 +132,7 @@ public class UserDaoImpl implements UserDao {
     public boolean isRegistred(String login, String hash_password) {
         Map namedParameters = new HashMap();
         namedParameters.put("login", login);
-        namedParameters.put("password", hash_password);
+        namedParameters.put("hash_password", hash_password);
         List<User> users = namedParameterJdbcTemplate.query(IS_REGISTRED_QUERY, namedParameters, new UserMapper());
         if (users.isEmpty())
             return false;
@@ -136,6 +146,17 @@ public class UserDaoImpl implements UserDao {
         namedParameters.put("login", login);
         List<User> users = namedParameterJdbcTemplate.query(IS_LOGIN_EXIST_QUERY, namedParameters, new UserMapper());
         if (users.isEmpty())
+            return false;
+        else
+            return true;
+    }
+
+    @Override
+    public boolean isTokenExist(String token) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("token", token);
+        Integer tokenR = (Integer)namedParameterJdbcTemplate.queryForObject(FIND_USER_ID_BY_TOKEN_QUERY, namedParameters, new TokenMapper());
+        if (tokenR == null)
             return false;
         else
             return true;

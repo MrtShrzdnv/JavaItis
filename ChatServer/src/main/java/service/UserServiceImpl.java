@@ -47,6 +47,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByLoginAndPassword(String login, String password) {
+        return userDao.findByLoginAndPassword(login, password);
+    }
+
+    @Override
     public List<User> findAllByChatId(Integer id) {
         List<Integer> usersId = userDao.findAllByChatId(id);
         List<User> users = null;
@@ -57,9 +62,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Integer> findAllUsersIdByChatId(Integer id) {
+        return userDao.findAllByChatId(id);
+    }
+
+    @Override
     public void save(User user) {
         userDao.save(user);
         userDao.saveToken(user.getId(), "");
+    }
+
+    @Override
+    public void saveUserToChat(Integer userId, Integer chatId) {
+        userDao.saveUserToChat(userId, chatId);
     }
 
     @Override
