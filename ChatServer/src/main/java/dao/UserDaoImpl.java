@@ -22,6 +22,9 @@ public class UserDaoImpl implements UserDao {
     private static final String IS_LOGIN_EXIST_QUERY = "SELECT * FROM chat_user WHERE login = :login";
     private static final String FIND_USER_ID_BY_TOKEN_QUERY = "SELECT * FROM auth WHERE token = :token";
     private static final String FIND_BY_LOGIN_AND_PASSWORD_QUERY = "SELECT * FROM chat_user WHERE login = :login and hash_password = :hash_password";;
+    private static final String FIND_LAST_MESSAGE_ID_QUERY = "SELECT * FROM user_message WHERE userId = :userId and chatId = :chatId";
+    private static final String SAVE_LAST_MESSAGE_TOKEN_QUERY = "INSERT INTO user_message (user_id, chat_id) VALUES (:userId, :chatId)";
+    private static final String UPDATE_LAST_MESSAGE_TOKEN_QUERY = "UPDATE user_message SET last_message_id = :messageId WHERE user_id = :userId and chat_id = :chatId";
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final String FIND_ALL_QUERY = "SELECT * FROM chat_user";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM chat_user WHERE id = :id";
@@ -114,6 +117,24 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public void saveLastMessage(Integer userId, Integer chatId) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("userId", userId);
+        namedParameters.put("chatId", chatId);
+        namedParameterJdbcTemplate.update(SAVE_LAST_MESSAGE_TOKEN_QUERY, namedParameters);
+
+    }
+
+    @Override
+    public void updateLastMessage(Integer userId, Integer chatId, Integer messageId) {
+        Map namedParameters = new HashMap();
+        namedParameters.put("userId", userId);
+        namedParameters.put("chatId", chatId);
+        namedParameters.put("messageId", messageId);
+        namedParameterJdbcTemplate.update(UPDATE_LAST_MESSAGE_TOKEN_QUERY, namedParameters);
+    }
+
+    @Override
     public void delete(int id) {
         Map namedParameters = new HashMap();
         namedParameters.put("userId", id);
@@ -168,5 +189,14 @@ public class UserDaoImpl implements UserDao {
         namedParameters.put("token", token);
         Integer id = (Integer)namedParameterJdbcTemplate.queryForObject(FIND_USER_ID_BY_TOKEN_QUERY, namedParameters, new UserIdMapper());
         return id;
+    }
+
+    @Override
+    public Integer findLastMessageId(Integer userId, Integer chatId) {
+        Map namedParameter = new HashMap();
+        namedParameter.put("userId", userId);
+        namedParameter.put("chatId", chatId);
+        List<Integer> id = namedParameterJdbcTemplate.queryForList(FIND_LAST_MESSAGE_ID_QUERY, namedParameter);
+        return id.get(0);
     }
 }

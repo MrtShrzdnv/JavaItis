@@ -18,10 +18,13 @@ public interface UserDao {
     void update(User user);
     void saveToken(Integer userId, String token);
     void updateToken(Integer userId, String token);
+    void saveLastMessage(Integer userId, Integer chatId);
+    void updateLastMessage(Integer userId, Integer chatId, Integer messageId);
     void delete(int id);
     void saveUserToChat(Integer userId, Integer chatId);
     boolean isRegistred(String login, String hash_password);
     boolean isLoginExist(String login);
     boolean isTokenExist(String token);
     Integer findUserIdByToken(String token);
+    Integer findLastMessageId(Integer userId, Integer chatId);
 }

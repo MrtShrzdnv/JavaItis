@@ -41,7 +41,7 @@ public class ChatController {
         for(Chat chat : listChat){
             listChatDto.add(converter.convert(chat));
         }
-        return new ResponseEntity<List<ChatDto>>(listChatDto, HttpStatus.OK);
+        return new ResponseEntity<>(listChatDto, HttpStatus.OK);
     }
     // create new chat
     @RequestMapping(value = "/chats", method = RequestMethod.POST)
@@ -50,9 +50,9 @@ public class ChatController {
         if (user != null){
             Chat chat = Chat.newBuilder().setName(chatName).setOwnerId(user.getId()).build();
             chatService.save(chat);
-            return new ResponseEntity<ChatDto>(converter.convert(chatService.findByName(chatName)), HttpStatus.CREATED);
+            return new ResponseEntity<>(converter.convert(chatService.findByName(chatName)), HttpStatus.CREATED);
         }else{
-            return new ResponseEntity<ChatDto>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -76,15 +76,23 @@ public class ChatController {
     // get all messages
     @RequestMapping(value = "/chats/{chat_id}/messages?get=all", method = RequestMethod.GET)
     public ResponseEntity<List<MessageDto>> getAllMessages(@RequestHeader String token, @PathVariable("chat_id") String chat_id){
-        if (verifier.verifyTokenIsValid(token)){
-            List<Message> messageList = messageService.findAllByChatId(Integer.parseInt(chat_id));
+        User user = userService.findByToken(token);
+        if (user != null){
+            Integer chatId = Integer.parseInt(chat_id);
+
+            List<Message> messageList = messageService.findAllByChatId(chatId);
+
+            Integer lastMessageId = messageList.size() - 1;
+            userService.updateLastMessageId(user.getId(),chatId, lastMessageId);
+
             List<MessageDto> result = new ArrayList<>();
             for(Message message : messageList){
                 result.add(converter.convert(message));
             }
-            return new ResponseEntity<List<MessageDto>>(result, HttpStatus.OK);
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }else{
-            return new ResponseEntity<List<MessageDto>>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -95,21 +103,21 @@ public class ChatController {
         if (user != null){
             Message message = Message.newBuilder().setText(text).setUserId(user.getId()).setChatId(Integer.parseInt(chat_id)).build();
             messageService.save(message);
-            return new ResponseEntity<ChatDto>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }else{
-            return new ResponseEntity<ChatDto>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
-    // TODO longPooling
+    // TODO longPolling
     @RequestMapping(value = "/chats/{chat_id}/messages", method = RequestMethod.GET)
     public ResponseEntity<List<MessageDto>> getChatsMessages(@RequestHeader String token, @PathVariable("chat_id") String chat_id){
         User user = userService.findByToken(token);
         if (user != null){
 
-            return new ResponseEntity<List<MessageDto>>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }else{
-            return new ResponseEntity<List<MessageDto>>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 }

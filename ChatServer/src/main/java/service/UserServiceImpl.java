@@ -67,6 +67,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Integer findLastMessageId(Integer userId, Integer chatId) {
+        return userDao.findLastMessageId(userId, chatId);
+    }
+
+    @Override
+    public void updateLastMessageId(Integer userId, Integer chatId, Integer messageId) {
+        userDao.updateLastMessage(userId, chatId, messageId);
+    }
+
+    @Override
     public void save(User user) {
         userDao.save(user);
         userDao.saveToken(user.getId(), "");
@@ -75,6 +85,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUserToChat(Integer userId, Integer chatId) {
         userDao.saveUserToChat(userId, chatId);
+        userDao.saveLastMessage(userId, chatId);
     }
 
     @Override
