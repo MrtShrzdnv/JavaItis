@@ -114,8 +114,26 @@ public class ChatController {
     public ResponseEntity<List<MessageDto>> getChatsMessages(@RequestHeader String token, @PathVariable("chat_id") String chat_id){
         User user = userService.findByToken(token);
         if (user != null){
-
-            return new ResponseEntity<>(HttpStatus.OK);
+            Integer chatId = Integer.parseInt(chat_id);
+            List<Message> messageList = messageService.findAllByChatId(chatId);
+            Integer lastReadedMessageId = userService.findLastMessageId(user.getId(), chatId);
+            Integer lastMessageId = (messageList.get(messageList.size() - 1).getId());
+            if (lastReadedMessageId >= lastMessageId){
+                try {
+                    this.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            lastReadedMessageId = userService.findLastMessageId(user.getId(), chatId);
+            lastMessageId = (messageList.get(messageList.size() - 1).getId());
+            List<Message> newMessageList = messageList.subList(lastReadedMessageId ,messageList.size() - 1);
+            List<MessageDto> result = new ArrayList<>();
+            for (Message m : newMessageList){
+                result.add(converter.convert(m));
+            }
+            userService.updateLastMessageId(user.getId(), chatId, lastMessageId);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
